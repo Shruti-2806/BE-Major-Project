@@ -1,43 +1,47 @@
-import { useState } from 'preact/hooks'
-import preactLogo from './assets/preact.svg'
-import viteLogo from '/vite.svg'
-import './app.css'
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
+import Mock from "./components/Mock";
+import Apptitude from "./components/Apptitude";
+import Core from "./components/Core";
+import { Footer } from "./components/Footer";
+import { Login } from "./components/Login";
+import { SignUp } from "./components/SignUp";
+import { Learndbms } from "./components/Learndbms";
+import { PractiseDbms } from "./components/PractiseDbms";
 
-export function App() {
-  const [count, setCount] = useState(0)
+export const App = () => {
+  const location = useLocation();
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} class="logo" alt="Vite logo" />
-        </a>
-        <a href="https://preactjs.com" target="_blank">
-          <img src={preactLogo} class="logo preact" alt="Preact logo" />
-        </a>
-      </div>
-      <h1>Vite + Preact</h1>
-      <div class="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/app.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p>
-        Check out{' '}
-        <a
-          href="https://preactjs.com/guide/v10/getting-started#create-a-vite-powered-preact-app"
-          target="_blank"
-        >
-          create-preact
-        </a>
-        , the official Preact + Vite starter
-      </p>
-      <p class="read-the-docs">
-        Click on the Vite and Preact logos to learn more
-      </p>
+      {/* Conditionally render Navbar based on the current path */}
+      {location.pathname !== "/login" && location.pathname !== "/signup" && (
+        <Navbar />
+      )}
+
+      <Routes>
+        <Route path="/" element={<Hero />} />
+        <Route path="/mock-interview" element={<Mock />} />
+        <Route path="/aptitude" element={<Apptitude />} />
+        <Route path="/core" element={<Core />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/learndbms" element={<Learndbms />} />
+        <Route path="/practisedbms" element={<PractiseDbms />} />
+      </Routes>
+
+      {/* Conditionally render Footer based on the current path */}
+      {location.pathname !== "/login" && location.pathname !== "/signup" && (
+        <Footer />
+      )}
     </>
-  )
-}
+  );
+};
+
+export default App;

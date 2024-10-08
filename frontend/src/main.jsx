@@ -1,5 +1,13 @@
-import { render } from 'preact'
-import { App } from './app.jsx'
-import './index.css'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter as Router } from "react-router-dom"; 
+import "./index.css";
+import App from "./App";
 
-render(<App />, document.getElementById('app'))
+createRoot(document.getElementById("root")).render(
+  <StrictMode>
+    <Router>
+      <App />
+    </Router>
+  </StrictMode>
+);

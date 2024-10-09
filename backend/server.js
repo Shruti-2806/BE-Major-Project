@@ -13,7 +13,7 @@ const __dirname = path.dirname(__filename);
 
 // app config
 const app = express();
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 3000;
 
 // Serve static files from the uploads folder
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
@@ -31,10 +31,10 @@ app.use("/api/user", userRouter);
 app.use("/api/core", coreRouter);
 
 app.get("/", (req, res) => {
-	res.send("API Working");
+  res.send("API Working");
 });
 
 // Start server
 app.listen(port, () => {
-	console.log(`Server is running on port http://localhost:${port}`);
+  console.log(`Server is running on port http://localhost:${port}`);
 });

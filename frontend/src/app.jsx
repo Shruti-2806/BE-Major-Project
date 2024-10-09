@@ -14,6 +14,7 @@ import { Login } from "./components/Login";
 import { SignUp } from "./components/SignUp";
 import { Learndbms } from "./components/Learndbms";
 import { PractiseDbms } from "./components/PractiseDbms";
+import { Learndbmslist } from "./components/Learndbmslist";
 
 export const App = () => {
   const location = useLocation();
@@ -32,8 +33,9 @@ export const App = () => {
         <Route path="/core" element={<Core />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/learndbms" element={<Learndbms />} />
         <Route path="/practisedbms" element={<PractiseDbms />} />
+        <Route path="/learndbmslist" element={<Learndbmslist />} />
+        <Route path="/subtopic/:id" element={<Learndbms />} />
       </Routes>
 
       {/* Conditionally render Footer based on the current path */}

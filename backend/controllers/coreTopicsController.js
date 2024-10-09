@@ -234,3 +234,39 @@ export const getAllQuestionsByTopicId = async (req, res) => {
 		res.status(500).json({ success: false, message: error.message });
 	}
 };
+
+export const getSubtopicList = async (req, res) => {
+	const { topicId } = req.body;
+
+	try {
+		const subtopics = await CoreSubtopicModel.find({ topic: topicId });
+
+		if (subtopics.length === 0) {
+			return res.status(404).json({ message: "No subtopics found for this topic." });
+		}
+
+		return res.status(200).json(subtopics);
+	} catch (error) {
+		console.error(error);
+		return res.status(500).json({ message: "An error occurred while fetching subtopics." });
+	}
+};
+
+// Function to get a subtopic by ID
+export const getSubtopicById = async (req, res) => {
+	const { id } = req.params;
+
+	try {
+		// const subtopic = await CoreSubtopicModel.findById(id).populate("topic");
+		const subtopic = await CoreSubtopicModel.findById(id);
+
+		if (!subtopic) {
+			return res.status(404).json({ message: "Subtopic not found." });
+		}
+
+		return res.status(200).json(subtopic);
+	} catch (error) {
+		console.error(error);
+		return res.status(500).json({ message: "An error occurred while fetching the subtopic." });
+	}
+};

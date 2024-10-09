@@ -8,6 +8,7 @@ import {
 	getAllTopics,
 	getTopicById,
 	addTopic,
+	addCategories,
 } from "../controllers/aptitudeController.js";
 
 const aptitudeRouter = express.Router();
@@ -20,8 +21,11 @@ aptitudeRouter.get("/questions/topic/:topicId", getAllQuestionsByTopicId); // Ge
 
 // Topic Routes
 aptitudeRouter.get("/topics", getAllTopics); // Get all topics
-aptitudeRouter.post("/topics/add", addTopic); // Get all topics
+aptitudeRouter.post("/topics/add", addTopic); // Add a topic
 aptitudeRouter.get("/topics/:id", getTopicById); // Get a topic by ID
 aptitudeRouter.get("/topics/name/:name", getTopicByName); // Get a topic by name
+
+// Category Routes
+aptitudeRouter.post("/categories/add", addCategories); // Add multiple categories
 
 export default aptitudeRouter;

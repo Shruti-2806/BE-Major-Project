@@ -1,7 +1,12 @@
 import mongoose from "mongoose";
 
 const questionSchema = new mongoose.Schema({
-	topic: {
+	categoryId: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "AptitudeCategory",
+		required: true,
+	},
+	topicId: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "AptitudeTopic",
 		required: true,

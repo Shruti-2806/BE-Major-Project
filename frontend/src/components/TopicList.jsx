@@ -14,15 +14,19 @@ const TopicList = () => {
           { topicId }
         );
 
-        console.log(response.data);
+        console.log(response.data); // Log the response data
 
-        if (response.data.success) {
-          setSubtopics(response.data.data);
+        // Check if the response is an array and has elements
+        if (Array.isArray(response.data) && response.data.length > 0) {
+          setSubtopics(response.data);
         } else {
-          console.error("Failed to fetch subtopics");
+          console.error("No subtopics found");
         }
       } catch (error) {
-        console.error("Error fetching subtopics:", error);
+        console.error(
+          "Error fetching subtopics:",
+          error.response ? error.response.data : error.message
+        );
       }
     };
 
@@ -73,13 +77,15 @@ const TopicList = () => {
                     {index + 1}
                   </td>
                   <td className="px-6 py-4 text-lg font-medium text-gray-200 border-b border-gray-600">
-                    {subtopic.name}
+                    <Link to={`/core/subtopics/${subtopic._id}`}>
+                      {subtopic.name}
+                    </Link>
                   </td>
                   <td className="px-6 py-4 border-b border-gray-600">
                     <div className="relative w-full h-4 bg-gray-700 rounded-full">
                       <div
                         className="absolute h-full bg-green-500 rounded-full"
-                        style={{ width: "50%" }}
+                        style={{ width: "50%" }} // Adjust this based on your actual progress logic
                       />
                     </div>
                   </td>

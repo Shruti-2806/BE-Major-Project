@@ -89,7 +89,9 @@ export const getQuestionById = async (req, res) => {
 // Get all questions by subtopic ID
 export const getAllQuestionsBySubtopicId = async (req, res) => {
 	try {
-		const questions = await CoreQuestionModel.find({ subtopic: req.params.subtopicId });
+		const questions = await CoreQuestionModel.find({
+			subtopic: req.params.subtopicId,
+		}).populate("subtopic");
 		res.status(200).json({ success: true, data: questions });
 	} catch (error) {
 		res.status(500).json({ success: false, message: error.message });
@@ -221,7 +223,7 @@ export const getAllQuestionsByTopicId = async (req, res) => {
 	const { topicId } = req.params;
 
 	try {
-		const questions = await CoreQuestionModel.find({ topic: topicId });
+		const questions = await CoreQuestionModel.find({ topic: topicId }).populate("subtopic");
 
 		if (questions.length === 0) {
 			return res

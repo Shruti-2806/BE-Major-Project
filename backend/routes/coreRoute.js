@@ -23,8 +23,8 @@ const coreRouter = express.Router();
 coreRouter.post("/questions/add/many", addManyQuestions); // Add many questions
 coreRouter.post("/questions/single", addSingleQuestion); // Add a single question
 coreRouter.get("/questions/:id", getQuestionById); // Get question by ID
-coreRouter.get("/topics/:topicId/questions", getAllQuestionsByTopicId); // Get all questions by topic ID
-coreRouter.get("/subtopics/:subtopicId/questions", getAllQuestionsBySubtopicId); // Get all questions by Subtopic ID
+coreRouter.get("/questions/topics/:topicId", getAllQuestionsByTopicId); // Get all questions by topic ID
+coreRouter.get("/questions/subtopics/:subtopicId", getAllQuestionsBySubtopicId); // Get all questions by Subtopic ID
 
 // Topic routes
 coreRouter.post("/topics/subtopiclist", getSubtopicList); // Get SubtopicList For Topic

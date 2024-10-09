@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom"; // Ensure you import Link
 import axios from "axios";
-
-export default function Core() {
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+const AptitudeSubjects = () => {
 	const [subjects, setSubjects] = useState([]);
 
 	// Fetch data from the backend using axios
@@ -28,7 +27,7 @@ export default function Core() {
 			<div className='max-w-7xl mx-auto'>
 				<div className='text-center mb-16'>
 					<h1 className='text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 mb-4'>
-						CORE SUBJECTS
+						APTITUDE
 					</h1>
 					<div className='w-32 h-2 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 mx-auto mb-8 rounded-full'></div>
 					<p
@@ -65,12 +64,8 @@ export default function Core() {
 							</div>
 							<div className='flex justify-center space-x-4 py-4'>
 								{/* Link component for navigation */}
-								<Link to='/core/subtopic'>
-									<button className='bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 text-white py-2 px-4 rounded-full hover:from-blue-500 hover:via-purple-500 hover:to-pink-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg text-lg'>
-										Learn
-									</button>
-								</Link>
-								<Link to='/core/practise'>
+
+								<Link to=''>
 									<button className='bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 text-white py-2 px-4 rounded-full hover:from-blue-500 hover:via-purple-500 hover:to-pink-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg text-lg'>
 										Practise
 									</button>
@@ -84,14 +79,17 @@ export default function Core() {
 					<p
 						className='text-center text-gray-500 max-w-3xl text-lg'
 						style={{ fontFamily: "Nunito" }}>
-						These core subjects are fundamental to computer science and are highly
-						valued in the job market. They provide a strong foundation for
-						problem-solving, system design, and software development, making them
-						crucial areas of focus for students preparing for placements in the tech
-						industry.
+						Aptitude tests are essential for assessing critical thinking, logical
+						reasoning, and problem-solving skills. They are a key component in
+						competitive exams and job placements, helping employers evaluate candidates'
+						ability to perform under pressure and solve real-world problems effectively.
+						Mastering these skills will significantly enhance your chances of success in
+						the tech industry and beyond.
 					</p>
 				</div>
 			</div>
 		</div>
 	);
-}
+};
+
+export default AptitudeSubjects;

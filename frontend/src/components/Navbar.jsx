@@ -18,7 +18,7 @@ export const Navbar = () => {
           <Link to="/">
             <img
               src="/src/assets/logo1.png"
-              width={120}
+              width={50}
               height={50}
               alt="Float UI logo"
             />

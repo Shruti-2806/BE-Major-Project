@@ -72,11 +72,12 @@ export default function Core() {
               </div>
               <div className="flex justify-center space-x-4 py-4">
                 {/* Link component for navigation */}
-                <Link to="/core/subtopic">
+                <Link to={`/core/${subject._id}/subtopic`}>
                   <button className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 text-white py-2 px-4 rounded-full hover:from-blue-500 hover:via-purple-500 hover:to-pink-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg text-lg">
                     Learn
                   </button>
                 </Link>
+
                 <Link to={`/core/${subject._id}/practise`}>
                   <button className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 text-white py-2 px-4 rounded-full hover:from-blue-500 hover:via-purple-500 hover:to-pink-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg text-lg">
                     Practise

@@ -17,7 +17,7 @@ const aptitudeRouter = express.Router();
 aptitudeRouter.post("/questions/addmany", addManyQuestions); // Add multiple questions
 aptitudeRouter.post("/questions", addSingleQuestion); // Add a single question
 aptitudeRouter.get("/questions/:id", getQuestionById); // Get a question by ID
-aptitudeRouter.get("/questions/topic/:topicId", getAllQuestionsByTopicId); // Get all questions by topic ID
+aptitudeRouter.get("/questions/topic", getAllQuestionsByTopicId); // Get all questions by topic ID
 
 // Topic Routes
 aptitudeRouter.get("/topics", getAllTopics); // Get all topics

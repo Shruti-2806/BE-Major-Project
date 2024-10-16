@@ -2,25 +2,40 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 const AptitudeSubjects = () => {
-	const [subjects, setSubjects] = useState([]);
-
-	// Fetch data from the backend using axios
-	useEffect(() => {
-		const fetchSubjects = async () => {
-			try {
-				const response = await axios.get("http://localhost:3000/api/core/topics/all");
-				if (response.data.success) {
-					setSubjects(response.data.data);
-				} else {
-					console.error("Failed to fetch subjects");
-				}
-			} catch (error) {
-				console.error("Error fetching subjects:", error);
-			}
-		};
-
-		fetchSubjects();
-	}, []);
+	const subjects = [
+    {
+      _id: "67068e9b0c58dc034b9f1dc5",
+      name: "Logical Reasoning",
+      importance:
+        "Logical reasoning helps develop critical thinking skills, which are essential for solving complex problems in competitive exams and interviews.",
+      image: "/src/assets/logical-reasoning.png",
+      practiseLink: "/practicelogicalreasoning",
+    },
+    {
+      _id: "67068e9b0c58dc034b9f1dc7",
+      name: "Quantitative Aptitude",
+      importance:
+        "Quantitative aptitude focuses on mathematical problem-solving, crucial for aptitude tests in placement exams and standardized tests.",
+      image: "/src/assets/quantitative.png",
+      practiseLink: "/practicequantitativeaptitude",
+    },
+    {
+      _id: "67068e9b0c58dc034b9f1dc6",
+      name: "Verbal Ability",
+      importance:
+        "Strong verbal ability is key for communication, comprehension, and linguistic problem-solving in aptitude exams and interviews.",
+      image: "/src/assets/verbal.png",
+      practiseLink: "/practiceverbalability",
+    },
+    {
+      _id: "67068e9b0c58dc034b9f1dc8",
+      name: "Data Interpretation",
+      importance:
+        "Data interpretation enhances the ability to analyze and draw insights from data, which is critical for decision-making in business scenarios.",
+      image: "/src/assets/data-interpretation.png",
+      practiseLink: "/practicedatainterpretation",
+    },
+  ];
 
 	return (
 		<div className='min-h-screen from-blue-900 via-purple-900 to-pink-800 px-4 sm:px-6 lg:px-8 text-white'>
@@ -33,8 +48,7 @@ const AptitudeSubjects = () => {
 					<p
 						className='text-2xl text-gray-500 max-w-3xl mx-auto'
 						style={{ fontFamily: "Nunito" }}>
-						Master these fundamental subjects to excel in your tech career and ace your
-						placements.
+						Master these essential aptitude skills to excel in your career and ace your placements.
 					</p>
 				</div>
 
@@ -47,7 +61,7 @@ const AptitudeSubjects = () => {
 							<div className='flex flex-col items-center space-y-4 pb-2 relative p-8'>
 								<div className='w-24 h-24 rounded-full bg-gradient-to-br from-blue-400 via-purple-400 to-pink-400 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300'>
 									<img
-										src='https://uxwing.com/wp-content/themes/uxwing/download/web-app-development/database-icon.png' // Example image, you can customize
+										src={subject.image}
 										alt={subject.name}
 										className='rounded-full w-16 h-16'
 									/>
@@ -64,9 +78,8 @@ const AptitudeSubjects = () => {
 							</div>
 							<div className='flex justify-center space-x-4 py-4'>
 								{/* Link component for navigation */}
-
-								<Link to=''>
-									<button className='bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 text-white py-2 px-4 rounded-full hover:from-blue-500 hover:via-purple-500 hover:to-pink-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg text-lg'>
+							<Link to={`/aptitude/${subject._id}/subtopic`}>
+								<button className='bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 text-white py-2 px-4 rounded-full hover:from-blue-500 hover:via-purple-500 hover:to-pink-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg text-lg'>
 										Practise
 									</button>
 								</Link>

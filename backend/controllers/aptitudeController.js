@@ -77,8 +77,18 @@ export const getQuestionById = async (req, res) => {
 
 // Get all questions by topic ID
 export const getAllQuestionsByTopicId = async (req, res) => {
+	const { topicId } = req.query.topicId;
+	console.log(topicId);
+
 	try {
-		const questions = await AptitudeQuestionModel.find({ topic: req.params.topicId });
+		const questions = await AptitudeQuestionModel.find({ topicId: topicId });
+
+		if (questions.length === 0) {
+			return res
+				.status(404)
+				.json({ success: false, message: "No questions found for this topic." });
+		}
+
 		res.status(200).json({ success: true, data: questions });
 	} catch (error) {
 		res.status(500).json({ success: false, message: error.message });
@@ -87,24 +97,37 @@ export const getAllQuestionsByTopicId = async (req, res) => {
 
 // Get all topics
 export const getAllTopics = async (req, res) => {
+	const { topicId } = req.query;
+
 	try {
-		const topics = await AptitudeTopicModel.find().populate('category_name'); 
-		res.status(200).json({ success: true, data: topics });
+		const subtopics = await AptitudeTopicModel.find({ categoryId: topicId });
+
+		if (subtopics.length === 0) {
+			return res.status(404).json({ message: "No subtopics found for this topic." });
+		}
+
+		return res.status(200).json(subtopics);
 	} catch (error) {
-		res.status(500).json({ success: false, message: error.message });
+		console.error(error);
+		return res.status(500).json({ message: "An error occurred while fetching subtopics." });
 	}
 };
 
 // Get single topic by ID
 export const getTopicById = async (req, res) => {
+	const { topicId } = req.body;
+
 	try {
-		const topic = await AptitudeTopicModel.findById(req.params.id).populate('category_name');  
-		if (!topic) {
-			return res.status(404).json({ success: false, message: "Topic not found" });
+		const subtopics = await AptitudeTopicModel.find({ categoryId: topicId });
+
+		if (subtopics.length === 0) {
+			return res.status(404).json({ message: "No subtopics found for this topic." });
 		}
-		res.status(200).json({ success: true, data: topic });
+
+		return res.status(200).json(subtopics);
 	} catch (error) {
-		res.status(500).json({ success: false, message: error.message });
+		console.error(error);
+		return res.status(500).json({ message: "An error occurred while fetching subtopics." });
 	}
 };
 

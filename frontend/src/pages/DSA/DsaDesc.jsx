@@ -4,10 +4,10 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { AlertCircle } from 'lucide-react';
-import { Line } from '@codemirror/state';
 
 const DsaDesc = () => {
   const { id } = useParams();
+  console.log(id)
   const [question, setQuestion] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -77,6 +77,7 @@ const DsaDesc = () => {
   }
 
   const { question: questionData, tests } = question;
+
 
   return (
     <div className="min-h-screen bg-white flex items-center justify-center p-4">

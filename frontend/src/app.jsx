@@ -18,9 +18,12 @@ import SubtopicList from "./pages/Core/SubtopicList";
 import SubtopicTheory from "./pages/Core/SubtopicTheory";
 import { Practise } from "./pages/Core/Practise";
 import PractiseBySubtopic from "./pages/Core/PractiseBySubtopic";
-
-import AptitudeSubtopicList from "./pages/Aptitude/AptitudeSubtopicList";
-import AptitudePractice from "./pages/Aptitude/AptitudePractice";
+import DsaTopicList from "./pages/DSA/DsaTopicList";
+import DsaQuesList from "./pages/DSA/DsaQuesList";
+import DsaDesc from "./pages/DSA/DsaDesc";
+// import Editor from "./components/Editor";
+import CodeEditor from "./pages/DSA/CodeEditor";
+// import { path } from 'path';
 
 const App = () => {
   const location = useLocation();
@@ -38,12 +41,18 @@ const App = () => {
           <Route path="/core" element={<CoreSubjects />} />
           <Route path="/core/:topicId/subtopic" element={<SubtopicList />} />
           <Route path="/core/subtopics/:id" element={<SubtopicTheory />} />
-          <Route path="/core/subtopic/:topic/practise"element={<PractiseBySubtopic />}/>
+          <Route
+            path="/core/subtopic/:topic/practise"
+            element={<PractiseBySubtopic />}
+          />
           <Route path="/core/:topicId/practise" element={<Practise />} />
-
           <Route path="/aptitude" element={<Aptitude />} />
-          <Route path="/aptitude/:topicId/subtopic" element={<AptitudeSubtopicList />} />
-          <Route path="/aptitude/:topicId/practise" element={<AptitudePractice />} />
+          <Route path="/aptitude/subtopic" element={<Aptitude />} />\
+
+          <Route path="/dsa" element={<DsaTopicList/>}/>
+          <Route path="/dsa/questions/:name" element={<DsaQuesList/>}/>
+          <Route path="/dsa/descriptions/:id" element={<DsaDesc/>}/>
+          <Route path="/ide/:id" element={<CodeEditor/>}/>
           {/* <Route path='/aptitude' element={<Apptitude />} /> */}
 
           {/* <Route path='/mock-interview' element={<Mock />} /> */}

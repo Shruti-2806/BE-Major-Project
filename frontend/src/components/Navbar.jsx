@@ -8,7 +8,7 @@ export const Navbar = () => {
     { title: "Aptitude", path: "/aptitude" },
     { title: "Core Subjects", path: "/core" },
     { title: "Gamification", path: "" },
-    { title: "DSA", path: "" },
+    { title: "DSA", path: "/dsa" },
   ];
 
   return (

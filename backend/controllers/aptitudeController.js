@@ -77,7 +77,8 @@ export const getQuestionById = async (req, res) => {
 
 // Get all questions by topic ID
 export const getAllQuestionsByTopicId = async (req, res) => {
-	const { topicId } = req.query.topicId;
+	const { topicId } = req.body;
+	console.log("Topic id in Question: ")
 	console.log(topicId);
 
 	try {
@@ -97,10 +98,10 @@ export const getAllQuestionsByTopicId = async (req, res) => {
 
 // Get all topics
 export const getAllTopics = async (req, res) => {
-	const { topicId } = req.query;
-
+	const { categoryId } = req.body;
+	
 	try {
-		const subtopics = await AptitudeTopicModel.find({ categoryId: topicId });
+		const subtopics = await AptitudeTopicModel.find({ categoryId: categoryId });
 
 		if (subtopics.length === 0) {
 			return res.status(404).json({ message: "No subtopics found for this topic." });
@@ -176,5 +177,14 @@ export const addCategories = async (req, res) => {
 		res.status(201).json({ success: true, data: insertedCategories });
 	} catch (error) {
 		res.status(500).json({ success: false, message: error.message });
+	}
+};
+
+export const getCategories = async (req, res) => {
+	try {
+	  const categories = await AptitudeCategoryModel.find();
+	  res.status(200).json(categories);
+	} catch (error) {
+	  res.status(500).json({ message: "Error retrieving categories", error: error.message });
 	}
 };

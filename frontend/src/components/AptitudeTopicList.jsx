@@ -9,17 +9,17 @@ const AptitudeTopicList = () => {
   useEffect(() => {
     const fetchSubtopics = async () => {
       try {
-        // Await the axios request
-        const response = await axios.get("http://localhost:3000/api/aptitude/topics", {
-          params: { topicId: topicId }
-        });
-
-        console.log(response.data); 
-        if (Array.isArray(response.data) && response.data.length > 0) {
-          setSubtopics(response.data);
-        } else {
-          console.error("No subtopics found");
-        }
+        const categoryId = topicId;
+        const response = await axios.post(
+          "http://localhost:3000/api/aptitude/topics",
+          { categoryId }
+        );
+        setSubtopics(response.data);
+        // if (Array.isArray(response.data) && response.data.length > 0) {
+        //   setSubtopics(response.data);
+        // } else {
+        //   console.error("No subtopics found");
+        // }
       } catch (error) {
         console.error(
           "Error fetching subtopics:",
@@ -77,7 +77,8 @@ const AptitudeTopicList = () => {
                     {index + 1}
                   </td>
                   <td className="px-6 py-4 text-lg font-medium text-gray-200 border-b border-gray-600">
-				  <Link to={`/aptitude/${subtopic._id}/practise`}>
+            
+				  <Link to={`/aptitude/subtopics/${subtopic._id}`}>
                       {subtopic.name}
                     </Link>
                   </td>

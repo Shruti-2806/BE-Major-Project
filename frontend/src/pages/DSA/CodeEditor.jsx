@@ -5,15 +5,16 @@ import { cpp } from "@codemirror/lang-cpp";
 import { python } from "@codemirror/lang-python";
 import { useParams } from "react-router";
 
+
 export default function CodeEditor() {
+  const {id}=useParams();
+  console.log(id)
   const [code, setCode] = useState("import java.io.*;\nimport java.util.*;\npublic class Main{\n\tpublic static void main(String args[]){\n\n\t}\n}");
   const [testCases, setTestCases] = useState([{ input: "", output: "" }]);
   const [language, setLanguage] = useState("Java");
   const [submissionOutput, setSubmissionOutput] = useState(""); // New state for submission output
   const [submissionStatus, setSubmissionStatus] = useState(""); // New state for submission status
-  const { questionid } = useParams();
-  console.log(questionid)
-  const qid = parseInt(questionid, 10);
+
   const handleCodeChange = (value) => {
     setCode(value);
   };
@@ -79,27 +80,29 @@ export default function CodeEditor() {
         body: JSON.stringify({
           code: encodeURIComponent(code),
           language: language,
-          id: 1,
+          id: id,
         }),
       });
-      
-      const data = await response.json();
-      console.log("Submission Response:", data);
-
+      console.log(response )
       if (response.ok) {
-        setSubmissionOutput(data.result || "No output returned."); // Set submission output
-        setSubmissionStatus("success"); // Set status for success
+        const data = await response.json();
+        console.log("Submission Response:", data);
+        setSubmissionOutput(data.result || "No output returned.");
+        setSubmissionStatus("success");
       } else {
-        const errorText = await response.text();
-        setSubmissionOutput(`Error submitting code: ${errorText}`);
-        setSubmissionStatus("error"); // Set status for error
+        // Read the error response and display a clearer message
+        const errorData = await response.json();
+        setSubmissionOutput(`Server Error: ${errorData.error || "Unknown error"}`);
+        setSubmissionStatus("error");
       }
     } catch (error) {
-      setSubmissionOutput(`Error: ${error.message}`);
-      setSubmissionStatus("error"); // Set status for error
+      console.error("Network Error:", error);
+      setSubmissionOutput(`Network Error: ${error.message}`);
+      setSubmissionStatus("error");
     }
   };
-
+  
+  
   const languageExtension = () => {
     switch (language) {
       case "Python":

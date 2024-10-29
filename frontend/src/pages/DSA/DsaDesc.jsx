@@ -1,16 +1,18 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { AlertCircle } from 'lucide-react';
-import { Line } from '@codemirror/state';
 
 const DsaDesc = () => {
   const { id } = useParams();
+  console.log(id)
   const [question, setQuestion] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const loc=useLocation();
+  console.log(loc)
 
   useEffect(() => {
     const fetchQuestion = async () => {
@@ -78,6 +80,7 @@ const DsaDesc = () => {
 
   const { question: questionData, tests } = question;
 
+
   return (
     <div className="min-h-screen bg-white flex items-center justify-center p-4">
       <div className="w-full bg-gray-100 rounded-lg shadow-lg p-6">
@@ -118,7 +121,7 @@ const DsaDesc = () => {
 
         {/* Button added here */}
         <div className="mt-6">
-        <Link to={`/ide/${questionData.id}`}>
+        <Link to={`/dsa/ide/${questionData.id}`}>
           <button className="bg-blue-500 text-white font-semibold py-2 px-4 rounded shadow hover:bg-blue-600 transition duration-200">
             Code
           </button>

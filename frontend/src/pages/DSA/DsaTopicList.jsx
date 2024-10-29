@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 
 const DsaTopicList = () => {
   const [subtopics, setSubtopics] = useState([]);
+  const loc=useLocation();
+  console.log(loc)
 
   useEffect(() => {
     const fetchSubtopics = async () => {
@@ -82,10 +84,11 @@ const DsaTopicList = () => {
                   </td>
                   <td className="px-6 py-4 border-b border-gray-600">
   <div className="flex justify-end space-x-4">
-  
+  <Link to={`/dsa/learn/${subtopic.name}`}>
     <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
       Learn
     </button>
+    </Link>
    
     <Link to={`/dsa/questions/${subtopic.name}`}>
     <button className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded" >

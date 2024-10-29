@@ -26,6 +26,7 @@ import DsaQuesList from "./pages/DSA/DsaQuesList";
 import DsaDesc from "./pages/DSA/DsaDesc";
 // import Editor from "./components/Editor";
 import CodeEditor from "./pages/DSA/CodeEditor";
+import LearnDesc from "./pages/DSA/LearnDesc";
 // import { path } from 'path';
 
 const App = () => {
@@ -57,10 +58,11 @@ const App = () => {
           <Route path="/dsa" element={<DsaTopicList/>}/>
           <Route path="/dsa/questions/:name" element={<DsaQuesList/>}/>
           <Route path="/dsa/descriptions/:id" element={<DsaDesc/>}/>
-          <Route path="/ide/:id" element={<CodeEditor/>}/>
+          <Route path="/dsa/ide/:id" element={<CodeEditor/>}/>
+          <Route path="/dsa/learn/:name" element={<LearnDesc/>}/>
           {/* <Route path='/aptitude' element={<Apptitude />} /> */}
 
-          {/* <Route path='/mock-interview' element={<Mock />} /> */}
+          <Route path='/mock' element={<Mock />} /> 
 
           {/* <Route path='/core' element={<Core />} /> */}
           <Route path="/login" element={<Login />} />

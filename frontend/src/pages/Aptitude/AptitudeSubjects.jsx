@@ -8,12 +8,8 @@ const AptitudeSubjects = () => {
 	useEffect(() => {
 		const fetchSubjects = async () => {
 			try {
-				const response = await axios.get("http://localhost:3000/api/core/topics/all");
-				if (response.data.success) {
-					setSubjects(response.data.data);
-				} else {
-					console.error("Failed to fetch subjects");
-				}
+				const response = await axios.get("http://localhost:3000/api/aptitude/categories");
+				setSubjects(response.data);
 			} catch (error) {
 				console.error("Error fetching subjects:", error);
 			}
@@ -33,8 +29,7 @@ const AptitudeSubjects = () => {
 					<p
 						className='text-2xl text-gray-500 max-w-3xl mx-auto'
 						style={{ fontFamily: "Nunito" }}>
-						Master these fundamental subjects to excel in your tech career and ace your
-						placements.
+						Master these aptitude topics to excel in your online assesments.
 					</p>
 				</div>
 
@@ -48,24 +43,23 @@ const AptitudeSubjects = () => {
 								<div className='w-24 h-24 rounded-full bg-gradient-to-br from-blue-400 via-purple-400 to-pink-400 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300'>
 									<img
 										src='https://uxwing.com/wp-content/themes/uxwing/download/web-app-development/database-icon.png' // Example image, you can customize
-										alt={subject.name}
+										alt={subject.category_name}
 										className='rounded-full w-16 h-16'
 									/>
 								</div>
 								<h2
 									className='text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400'
 									style={{ fontFamily: "Nunito" }}>
-									{subject.name}
+									{subject.category_name}
 								</h2>
 								<div className='absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-blue-400 via-purple-400 to-pink-400 opacity-10 rounded-full blur-2xl transform translate-x-12 -translate-y-12'></div>
 							</div>
 							<div className='px-6 py-4'>
-								<p className='text-gray-300 text-center'>{subject.description}</p>
+								<p className='text-gray-300 text-center'>{subject.category_description}</p>
 							</div>
 							<div className='flex justify-center space-x-4 py-4'>
 								{/* Link component for navigation */}
-
-								<Link to=''>
+								<Link to={`/aptitude/${subject._id}/subtopic`}>
 									<button className='bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 text-white py-2 px-4 rounded-full hover:from-blue-500 hover:via-purple-500 hover:to-pink-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg text-lg'>
 										Practise
 									</button>

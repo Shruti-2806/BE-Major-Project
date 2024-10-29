@@ -7,6 +7,9 @@ import {
 import Navbar from "./components/Navbar";
 import Mock from "./components/Mock";
 import Aptitude from "./pages/Aptitude/AptitudeSubjects";
+import AptitudeSubtopicList from "./pages/Aptitude/AptitudeSubtopicList";
+import AptitudePractice from "./pages/Aptitude/AptitudePractice";
+
 import Core from "./components/Core";
 import { Footer } from "./components/Footer";
 import { Login } from "./components/Login";
@@ -48,7 +51,9 @@ const App = () => {
           />
           <Route path="/core/:topicId/practise" element={<Practise />} />
           <Route path="/aptitude" element={<Aptitude />} />
-          <Route path="/aptitude/subtopic" element={<Aptitude />} />\
+          <Route path="/aptitude/subtopic" element={<Aptitude />} />
+          <Route path="/aptitude/:topicId/subtopic" element={<AptitudeSubtopicList />} />
+          <Route path="/aptitude/subtopics/:topicId" element={<AptitudePractice />} />
 
           <Route path="/dsa" element={<DsaTopicList/>}/>
           <Route path="/dsa/questions/:name" element={<DsaQuesList/>}/>

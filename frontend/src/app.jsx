@@ -72,11 +72,6 @@ const App = () => {
           {/* <Route path='/subtopic/:id' element={<Learndbms />} /> */}
         </Routes>
       </div>
-
-      {/* Conditionally render Footer based on the current path */}
-      {location.pathname !== "/login" && location.pathname !== "/signup" && (
-        <Footer />
-      )}
     </>
   );
 };

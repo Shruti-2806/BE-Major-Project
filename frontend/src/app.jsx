@@ -29,19 +29,22 @@ import CodeEditor from "./pages/DSA/CodeEditor";
 import LearnDesc from "./pages/DSA/LearnDesc";
 // import { path } from 'path';
 
+import CompanyAssessment from "./pages/OA/CompanyAssessment";
+import AssessmentTest from "./pages/OA/AssesmentTest";
+import Hero from "./components/Hero";
+
 const App = () => {
   const location = useLocation();
 
   return (
     <>
       {/* Conditionally render Navbar based on the current path */}
-      {location.pathname !== "/login" && location.pathname !== "/signup" && (
+      {location.pathname !== "/login" && location.pathname !== "/signup" && !(location.pathname.startsWith("/assessment/")) && (
         <Navbar />
       )}
       <div className="app">
         <Routes>
-          {/* <Route path='/' element={<Hero />} /> */}
-          <Route path="/" element={<Home />} />
+          <Route path='/' element={<Hero />} />
           <Route path="/core" element={<CoreSubjects />} />
           <Route path="/core/:topicId/subtopic" element={<SubtopicList />} />
           <Route path="/core/subtopics/:id" element={<SubtopicTheory />} />
@@ -70,6 +73,9 @@ const App = () => {
           {/* <Route path='/practisedbms' element={<PractiseDbms />} /> */}
           {/* <Route path='/learndbmslist' element={<Learndbmslist />} /> */}
           {/* <Route path='/subtopic/:id' element={<Learndbms />} /> */}
+
+          <Route path="/assessment" element={<CompanyAssessment />} />
+          <Route path="/assessment/:mode/:tab" element={<AssessmentTest />} />
         </Routes>
       </div>
     </>

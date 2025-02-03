@@ -32,6 +32,8 @@ import LearnDesc from "./pages/DSA/LearnDesc";
 import CompanyAssessment from "./pages/OA/CompanyAssessment";
 import AssessmentTest from "./pages/OA/AssesmentTest";
 import Hero from "./components/Hero";
+import OnlineAssesment from "./pages/OA/OnlineAssesment";
+import MockInterview from "./pages/OA/MockMain";
 
 const App = () => {
   const location = useLocation();
@@ -48,10 +50,7 @@ const App = () => {
           <Route path="/core" element={<CoreSubjects />} />
           <Route path="/core/:topicId/subtopic" element={<SubtopicList />} />
           <Route path="/core/subtopics/:id" element={<SubtopicTheory />} />
-          <Route
-            path="/core/subtopic/:topic/practise"
-            element={<PractiseBySubtopic />}
-          />
+          <Route path="/core/subtopic/:topic/practise"element={<PractiseBySubtopic />}/>
           <Route path="/core/:topicId/practise" element={<Practise />} />
           <Route path="/aptitude" element={<Aptitude />} />
           <Route path="/aptitude/subtopic" element={<Aptitude />} />
@@ -74,8 +73,11 @@ const App = () => {
           {/* <Route path='/learndbmslist' element={<Learndbmslist />} /> */}
           {/* <Route path='/subtopic/:id' element={<Learndbms />} /> */}
 
+          {/* OA */}
           <Route path="/assessment" element={<CompanyAssessment />} />
           <Route path="/assessment/:mode/:tab" element={<AssessmentTest />} />
+          <Route path='/mock-interview' element={<MockInterview />} />
+          <Route path='/mock-interview/oa' element={<OnlineAssesment />} />
         </Routes>
       </div>
     </>

@@ -74,11 +74,11 @@ const App = () => {
           {/* <Route path='/subtopic/:id' element={<Learndbms />} /> */}
 
           {/* OA */}
-          <Route path="/assessment" element={<CompanyAssessment />} />
-          <Route path="/assessment/:mode/:tab" element={<AssessmentTest />} />
           <Route path='/mock-interview' element={<MockInterview />} />
           <Route path='/mock-interview/oa' element={<OnlineAssesment />} />
-        </Routes>
+          <Route path="/assessment/oa/:id/:name" element={<CompanyAssessment />} />
+          <Route path="/assessment/:mode/:tab" element={<AssessmentTest/>}/>
+          </Routes>
       </div>
     </>
   );

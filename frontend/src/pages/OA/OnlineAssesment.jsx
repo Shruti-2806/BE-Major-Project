@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { FaCode, FaCalculator, FaBook, FaLanguage } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const getDifficultyColor = (difficulty) => {
   switch (difficulty) {
@@ -19,6 +20,7 @@ export default function OnlineAssessment() {
   const [companies, setCompanies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate(); // For navigation
 
   useEffect(() => {
     const fetchCompanies = async () => {
@@ -30,28 +32,27 @@ export default function OnlineAssessment() {
           },
           body: JSON.stringify({}),
         });
-    
+
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-    
+
         const result = await response.json();
-        console.log("Fetched companies:", result); 
-    
+        console.log("Fetched companies:", result);
+
         if (result && result.status === "OK" && Array.isArray(result.data)) {
-          setCompanies(result.data); 
+          setCompanies(result.data);
         } else {
           console.error("Unexpected response format:", result);
-          setCompanies([]); 
+          setCompanies([]);
         }
       } catch (error) {
         console.error("Error fetching companies:", error);
-        setCompanies([]); 
+        setCompanies([]);
       } finally {
-        setLoading(false);  
+        setLoading(false);
       }
     };
-    
 
     fetchCompanies();
   }, []);
@@ -88,7 +89,8 @@ export default function OnlineAssessment() {
               .map((company) => (
                 <div
                   key={company.id}
-                  className="bg-white rounded-lg shadow-xl hover:shadow-2xl transform transition duration-300 hover:scale-105 p-6"
+                  className="bg-white rounded-lg shadow-xl hover:shadow-2xl transform transition duration-300 hover:scale-105 p-6 cursor-pointer"
+                  onClick={() => navigate(`/assessment/oa/${company.id}/${company.name}`)}
                 >
                   <div className="flex items-center space-x-4 mb-6">
                     <img

@@ -25,7 +25,7 @@ export default function OnlineAssessment() {
   useEffect(() => {
     const fetchCompanies = async () => {
       try {
-        const response = await fetch("http://43.204.230.35/company", {
+        const response = await fetch("http://localhost:8080/company", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

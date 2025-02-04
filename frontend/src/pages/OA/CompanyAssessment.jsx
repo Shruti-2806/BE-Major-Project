@@ -10,12 +10,9 @@ export default function CompanyAssessment() {
   useEffect(() => {
     if (!id) return;
 
-    console.log(id);
-    console.log(sections);
-
     const fetchSections = async () => {
       try {
-        const response = await fetch("http://43.204.230.35/sections", {
+        const response = await fetch("http://localhost:8080/sections", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -37,11 +34,11 @@ export default function CompanyAssessment() {
 
   const getIcon = (name) => {
     switch (name.toLowerCase()) {
-      case "coding problem":
+      case "dsa":
         return "https://img.icons8.com/fluency-systems-regular/50/code.png"
       case "aptitude":
         return "https://img.icons8.com/laces/64/brain.png"
-      case "core":
+      case "technical":
         return "https://img.icons8.com/ios-filled/50/engineering.png"
       case "english":
         return "https://img.icons8.com/ios-filled/50/book.png"
@@ -51,17 +48,19 @@ export default function CompanyAssessment() {
   }
 
   const handleNavigation = (path, section) => {
-    console.log(path);
-    console.log(section);
-    navigate(path, {
-      state: {
-        sectionData: section,
-        companyId: id,
-        companyName: name,
-        allSections: sections,
-      },
-    })
-  }
+    // Check if it's a Coding Problem section
+    const isCodingProblem = section.name.toLowerCase() === 'dsa';
+
+      navigate(path, {
+        state: {
+          sectionData: section,
+          companyId: id,
+          companyName: name,
+          allSections: sections,
+        },
+      });
+  };
+  
 
   return (
     <div className="min-h-screen from-blue-900 via-purple-900 to-pink-800 px-4 sm:px-6 lg:px-8 text-white">
@@ -91,7 +90,7 @@ export default function CompanyAssessment() {
                   className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 mb-2"
                   style={{ fontFamily: "Nunito" }}
                 >
-                  {section.name}
+                  {section.name.toUpperCase()}
                 </h2>
                 <div className="flex items-center text-gray-400 text-sm">
                   <span className="mr-4">Total Marks: {section.marks}</span>
@@ -109,7 +108,7 @@ export default function CompanyAssessment() {
                 </button>
                 <button
                   onClick={() =>
-                    handleNavigation(`/assessment/start/${section["section-id"] || section["ques-id"]}`, section)
+                    handleNavigation(`/assessment/start/${section["name"]}`, section)
                   }
                   className="flex items-center gap-2 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 text-white py-2 px-4 rounded-full hover:from-blue-500 hover:via-purple-500 hover:to-pink-500 transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
                 >

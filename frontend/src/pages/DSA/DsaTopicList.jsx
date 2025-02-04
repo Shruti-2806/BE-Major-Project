@@ -11,7 +11,7 @@ const DsaTopicList = () => {
     const fetchSubtopics = async () => {
       try {
         const response = await axios.post(
-          "http://13.201.82.235:20000/topics"
+          "http://43.204.230.35/topics"
         );
 
         console.log(response.data); // Log the response data

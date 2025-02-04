@@ -10,7 +10,7 @@ const DsaQuesList = () => {
     const fetchQuestions = async () => {
       try {
         // Make a POST request to fetch questions based on the topic name
-        const response = await axios.post("http://13.201.82.235:20000/questions", {
+        const response = await axios.post("http://43.204.230.35/questions", {
           tag: name 
         });
 

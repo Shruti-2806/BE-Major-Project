@@ -17,7 +17,7 @@ const DsaDesc = () => {
   useEffect(() => {
     const fetchQuestion = async () => {
       try {
-        const response = await axios.post(`http://43.204.230.35/description`, { id });
+        const response = await axios.post(`http://localhost:8080/description`, { id });
         console.log('API Response:', response.data);
         if (response.data.status === 'OK') {
           setQuestion(response.data.data);

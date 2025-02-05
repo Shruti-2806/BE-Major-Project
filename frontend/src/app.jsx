@@ -34,6 +34,7 @@ import AssessmentTest from "./pages/OA/AssesmentTest";
 import Hero from "./components/Hero";
 import OnlineAssesment from "./pages/OA/OnlineAssesment";
 import MockInterview from "./pages/OA/MockMain";
+import AssessmentDashboard from "./pages/DSA/AssessmentDashboard";
 
 const App = () => {
   const location = useLocation();
@@ -75,6 +76,7 @@ const App = () => {
 
           {/* OA */}
           <Route path='/mock-interview' element={<MockInterview />} />
+          <Route path='/dashboard' element={<AssessmentDashboard />} />
           <Route path='/mock-interview/oa' element={<OnlineAssesment />} />
           <Route path="/assessment/oa/:id/:name" element={<CompanyAssessment />} />
           <Route path="/assessment/:mode/:tab" element={<AssessmentTest/>}/>

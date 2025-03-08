@@ -85,7 +85,8 @@ const App = () => {
           <Route path="/assessment/oa/:id/:name" element={<CompanyAssessment />} />
           <Route path="/assessment/:mode/:tab" element={<AssessmentTest/>}/>
           {/* <Route path="/resume" element={<ResumeScreen/>}/> */}
-          <Route path="/resume" element={<Interview/>}/>
+          <Route path="/resume" element={<ResumeScreen/>}/>
+          <Route path="/technical-interview" element={<Interview/>}/>
           </Routes>
       </div>
     </>

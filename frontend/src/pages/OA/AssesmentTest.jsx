@@ -1,33 +1,36 @@
-import { useState, useEffect } from "react";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
-import { Timer, ChevronLeft, ChevronRight, BookOpen } from "lucide-react";
+"use client"
+
+import { useState, useEffect } from "react"
+import { useParams, useNavigate, useLocation } from "react-router-dom"
+import { Timer, ChevronLeft, ChevronRight, BookOpen } from "lucide-react"
 
 export default function AssessmentTest() {
-  const { tab, mode } = useParams();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { companyId, companyName } = location.state || {};
+  const { tab, mode } = useParams()
+  const navigate = useNavigate()
+  const location = useLocation()
+  const { companyId, companyName } = location.state || {}
 
-  const [allSections, setAllSections] = useState([]);
-  const [activeTab, setActiveTab] = useState(tab);
-  const [timeLeft, setTimeLeft] = useState(7200); // 2 hours countdown
-  const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [sectionData, setSectionData] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [activeDSAQuestion, setActiveDSAQuestion] = useState(0);
+  const [allSections, setAllSections] = useState([])
+  const [activeTab, setActiveTab] = useState(tab)
+  const [timeLeft, setTimeLeft] = useState(7200) // 2 hours countdown
+  const [isSidebarCollapsed, setSidebarCollapsed] = useState(false)
+  const [sectionData, setSectionData] = useState({})
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+  const [activeDSAQuestion, setActiveDSAQuestion] = useState(0)
+  const [selectedAnswers, setSelectedAnswers] = useState({})
 
   // Fetch question data
   useEffect(() => {
     if (!companyId) {
-      console.error("No companyId provided in location.state");
-      setError("Company information missing.");
-      setLoading(false);
-      return;
+      console.error("No companyId provided in location.state")
+      setError("Company information missing.")
+      setLoading(false)
+      return
     }
 
-    setLoading(true);
-    setError(null);
+    setLoading(true)
+    setError(null)
 
     fetch("http://localhost:8080/question-data", {
       method: "POST",
@@ -38,49 +41,56 @@ export default function AssessmentTest() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("Fetched data:", data);
+        console.log("Fetched data:", data)
         if (data.status === "OK") {
-          const keys = Object.keys(data).filter((key) => key !== "status");
+          const keys = Object.keys(data).filter((key) => key !== "status")
           if (keys.length === 0) {
-            setError("No question data available.");
+            setError("No question data available.")
           } else {
-            setAllSections(keys);
-            setSectionData(data);
-            setActiveTab(tab || keys[0]);
+            setAllSections(keys)
+            setSectionData(data)
+            setActiveTab(tab || keys[0])
           }
         } else {
-          setError("Unexpected data format from server.");
+          setError("Unexpected data format from server.")
         }
-        setLoading(false);
+        setLoading(false)
       })
       .catch((err) => {
-        console.error("Error fetching data:", err);
-        setError("Failed to load data. Please try again later.");
-        setLoading(false);
-      });
-  }, [tab, companyId]);
+        console.error("Error fetching data:", err)
+        setError("Failed to load data. Please try again later.")
+        setLoading(false)
+      })
+  }, [tab, companyId])
 
   // Timer effect
   useEffect(() => {
     const timer = setInterval(() => {
-      setTimeLeft((prev) => (prev <= 0 ? 0 : prev - 1));
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
+      setTimeLeft((prev) => (prev <= 0 ? 0 : prev - 1))
+    }, 1000)
+    return () => clearInterval(timer)
+  }, [])
 
   const formatTime = (seconds) => {
-    const hours = Math.floor(seconds / 3600);
-    const minutes = Math.floor((seconds % 3600) / 60);
-    const secs = seconds % 60;
+    const hours = Math.floor(seconds / 3600)
+    const minutes = Math.floor((seconds % 3600) / 60)
+    const secs = seconds % 60
     return `${hours.toString().padStart(2, "0")}:${minutes
       .toString()
-      .padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
-  };
+      .padStart(2, "0")}:${secs.toString().padStart(2, "0")}`
+  }
 
   const handleTabChange = (newTab) => {
-    setActiveTab(newTab);
-    navigate(`/assessment/${mode}/${newTab}`, { state: location.state });
-  };
+    setActiveTab(newTab)
+    navigate(`/assessment/${mode}/${newTab}`, { state: location.state })
+  }
+
+  const handleAnswerSelection = (questionId, selectedOption) => {
+    setSelectedAnswers((prev) => ({
+      ...prev,
+      [questionId]: selectedOption,
+    }))
+  }
 
   const renderDSAQuestion = (question, index) => (
     <div key={question.question.id} className="mb-6 p-4 bg-gray-700 rounded-lg">
@@ -104,27 +114,36 @@ export default function AssessmentTest() {
         onChange={(e) => console.log(e.target.value)}
       />
     </div>
-  );
+  )
 
   const renderQuestion = (question, index) => {
     if (activeTab === "dsa") {
-      return index === activeDSAQuestion ? renderDSAQuestion(question, index) : null;
+      return index === activeDSAQuestion ? renderDSAQuestion(question, index) : null
     }
     return (
       <div key={question.id} className="mb-6 p-4 bg-gray-700 rounded-lg">
         <p className="text-lg">{question.description}</p>
         <div className="grid grid-cols-2 gap-3 mt-3">
-          <button className="p-2 bg-gray-600 rounded-md hover:bg-blue-500">{question.option1}</button>
-          <button className="p-2 bg-gray-600 rounded-md hover:bg-blue-500">{question.option2}</button>
-          <button className="p-2 bg-gray-600 rounded-md hover:bg-blue-500">{question.option3}</button>
-          <button className="p-2 bg-gray-600 rounded-md hover:bg-blue-500">{question.option4}</button>
+          {["option1", "option2", "option3", "option4"].map((option) => (
+            <button
+              key={option}
+              className={`p-2 rounded-md transition-colors ${
+                selectedAnswers[question.id] === option
+                  ? "bg-blue-500 hover:bg-blue-600"
+                  : "bg-gray-600 hover:bg-blue-500"
+              }`}
+              onClick={() => handleAnswerSelection(question.id, option)}
+            >
+              {question[option]}
+            </button>
+          ))}
         </div>
       </div>
-    );
-  };
+    )
+  }
 
   // Extract DSA questions (or default to an empty array if not available)
-  const dsaQuestions = sectionData?.dsa || [];
+  const dsaQuestions = sectionData?.dsa || []
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white">
@@ -201,9 +220,7 @@ export default function AssessmentTest() {
             <h2 className="text-2xl font-bold mb-4">{activeTab?.toUpperCase()}</h2>
 
             {/* Render Questions for active tab */}
-            {sectionData[activeTab]?.map((question, index) =>
-              renderQuestion(question, index)
-            )}
+            {sectionData[activeTab]?.map((question, index) => renderQuestion(question, index))}
 
             {/* Navigation for DSA questions */}
             {activeTab === "dsa" && dsaQuestions.length > 0 && (
@@ -216,11 +233,7 @@ export default function AssessmentTest() {
                   Previous
                 </button>
                 <button
-                  onClick={() =>
-                    setActiveDSAQuestion((prev) =>
-                      Math.min(dsaQuestions.length - 1, prev + 1)
-                    )
-                  }
+                  onClick={() => setActiveDSAQuestion((prev) => Math.min(dsaQuestions.length - 1, prev + 1))}
                   disabled={activeDSAQuestion === dsaQuestions.length - 1}
                   className="px-4 py-2 bg-blue-500 rounded-md disabled:bg-gray-600"
                 >
@@ -232,5 +245,6 @@ export default function AssessmentTest() {
         </div>
       </div>
     </div>
-  );
+  )
 }
+

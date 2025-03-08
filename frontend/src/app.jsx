@@ -35,6 +35,8 @@ import Hero from "./components/Hero";
 import OnlineAssesment from "./pages/OA/OnlineAssesment";
 import MockInterview from "./pages/OA/MockMain";
 import AssessmentDashboard from "./pages/DSA/AssessmentDashboard";
+import ResumeScreen from "./pages/Technical/ResumeScreen"
+
 
 const App = () => {
   const location = useLocation();
@@ -80,6 +82,7 @@ const App = () => {
           <Route path='/mock-interview/oa' element={<OnlineAssesment />} />
           <Route path="/assessment/oa/:id/:name" element={<CompanyAssessment />} />
           <Route path="/assessment/:mode/:tab" element={<AssessmentTest/>}/>
+          <Route path="/resume" element={<ResumeScreen/>}/>
           </Routes>
       </div>
     </>

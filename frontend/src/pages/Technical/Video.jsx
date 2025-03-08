@@ -4,6 +4,7 @@ export default function Video({ isRecording }) {
   const videoRef = useRef(null);
   const mediaRecorderRef = useRef(null);
   const [recordedChunks, setRecordedChunks] = useState([]);
+  const [audioChunks, setAudioChunks] = useState([]);
   const [stream, setStream] = useState(null);
   const [recordingStatus, setRecordingStatus] = useState("");
   const [recordingTime, setRecordingTime] = useState(0);
@@ -47,45 +48,80 @@ export default function Video({ isRecording }) {
   const startRecording = () => {
     if (!stream) return;
     setRecordedChunks([]);
+    setAudioChunks([]);
     setRecordingTime(0);
-    const recorder = new MediaRecorder(stream, { mimeType: "video/webm" });
-    recorder.ondataavailable = (event) => {
+
+    // Create separate tracks for video+audio and audio-only
+    const videoStream = new MediaStream(stream.getVideoTracks());
+    const audioStream = new MediaStream(stream.getAudioTracks());
+
+    const videoRecorder = new MediaRecorder(stream, { mimeType: "video/webm" });
+    const audioRecorder = new MediaRecorder(audioStream, { mimeType: "audio/webm" });
+
+    videoRecorder.ondataavailable = (event) => {
       if (event.data && event.data.size > 0) {
         setRecordedChunks((prev) => [...prev, event.data]);
       }
     };
-    recorder.onstart = () => {
+
+    audioRecorder.ondataavailable = (event) => {
+      if (event.data && event.data.size > 0) {
+        setAudioChunks((prev) => [...prev, event.data]);
+      }
+    };
+
+    videoRecorder.onstart = () => {
       setRecordingStatus("Recording");
       timerRef.current = setInterval(() => {
         setRecordingTime((prev) => prev + 1);
       }, 1000);
     };
-    recorder.onstop = () => {
+
+    videoRecorder.onstop = () => {
       setRecordingStatus("");
       if (timerRef.current) {
         clearInterval(timerRef.current);
       }
+
+      // Save video file
       if (recordedChunks.length > 0) {
-        const blob = new Blob(recordedChunks, { type: "video/webm" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        document.body.appendChild(a);
-        a.style.display = "none";
-        a.href = url;
-        a.download = `interview-answer-${Date.now()}.webm`;
-        a.click();
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
+        const videoBlob = new Blob(recordedChunks, { type: "video/webm" });
+        downloadBlob(videoBlob, `interview-answer-${Date.now()}.webm`);
+      }
+
+      // Save audio file
+      if (audioChunks.length > 0) {
+        const audioBlob = new Blob(audioChunks, { type: "audio/webm" });
+        downloadBlob(audioBlob, `interview-audio-${Date.now()}.webm`);
       }
     };
-    recorder.start(1000);
-    mediaRecorderRef.current = recorder;
+
+    videoRecorder.start(1000);
+    audioRecorder.start(1000);
+    mediaRecorderRef.current = { videoRecorder, audioRecorder };
   };
 
   const stopRecording = () => {
-    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== "inactive") {
-      mediaRecorderRef.current.stop();
+    if (mediaRecorderRef.current) {
+      if (mediaRecorderRef.current.videoRecorder?.state !== "inactive") {
+        mediaRecorderRef.current.videoRecorder.stop();
+      }
+      if (mediaRecorderRef.current.audioRecorder?.state !== "inactive") {
+        mediaRecorderRef.current.audioRecorder.stop();
+      }
     }
+  };
+
+  const downloadBlob = (blob, fileName) => {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    document.body.appendChild(a);
+    a.style.display = "none";
+    a.href = url;
+    a.download = fileName;
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
   };
 
   const formatTime = (seconds) => {

@@ -36,6 +36,8 @@ import OnlineAssesment from "./pages/OA/OnlineAssesment";
 import MockInterview from "./pages/OA/MockMain";
 import AssessmentDashboard from "./pages/DSA/AssessmentDashboard";
 import ResumeScreen from "./pages/Technical/ResumeScreen"
+import Audio from "./pages/Technical/Audio.jsx"
+import Interview from "./pages/Technical/Interview.jsx";
 
 
 const App = () => {
@@ -82,7 +84,8 @@ const App = () => {
           <Route path='/mock-interview/oa' element={<OnlineAssesment />} />
           <Route path="/assessment/oa/:id/:name" element={<CompanyAssessment />} />
           <Route path="/assessment/:mode/:tab" element={<AssessmentTest/>}/>
-          <Route path="/resume" element={<ResumeScreen/>}/>
+          {/* <Route path="/resume" element={<ResumeScreen/>}/> */}
+          <Route path="/resume" element={<Interview/>}/>
           </Routes>
       </div>
     </>

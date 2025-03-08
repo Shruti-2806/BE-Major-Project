@@ -31,7 +31,7 @@ export default function CodeEditor() {
 
   const runTests = async () => {
     try {
-      const response = await fetch("http://13.201.82.235:20000/run_code", {
+      const response = await fetch("http://localhost:8080/run_code", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -72,7 +72,7 @@ export default function CodeEditor() {
 
   const submitCode = async () => {
     try {
-      const response = await fetch("http://13.201.82.235:20000/submit_code", {
+      const response = await fetch("http://localhost:8080/submit_code", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

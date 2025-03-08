@@ -34,6 +34,11 @@ import AssessmentTest from "./pages/OA/AssesmentTest";
 import Hero from "./components/Hero";
 import OnlineAssesment from "./pages/OA/OnlineAssesment";
 import MockInterview from "./pages/OA/MockMain";
+import AssessmentDashboard from "./pages/DSA/AssessmentDashboard";
+import ResumeScreen from "./pages/Technical/ResumeScreen"
+import Audio from "./pages/Technical/Audio.jsx"
+import Interview from "./pages/Technical/Interview.jsx";
+
 
 const App = () => {
   const location = useLocation();
@@ -74,11 +79,15 @@ const App = () => {
           {/* <Route path='/subtopic/:id' element={<Learndbms />} /> */}
 
           {/* OA */}
-          <Route path="/assessment" element={<CompanyAssessment />} />
-          <Route path="/assessment/:mode/:tab" element={<AssessmentTest />} />
           <Route path='/mock-interview' element={<MockInterview />} />
+          <Route path='/dashboard' element={<AssessmentDashboard />} />
           <Route path='/mock-interview/oa' element={<OnlineAssesment />} />
-        </Routes>
+          <Route path="/assessment/oa/:id/:name" element={<CompanyAssessment />} />
+          <Route path="/assessment/:mode/:tab" element={<AssessmentTest/>}/>
+          {/* <Route path="/resume" element={<ResumeScreen/>}/> */}
+          <Route path="/resume" element={<ResumeScreen/>}/>
+          <Route path="/technical-interview" element={<Interview/>}/>
+          </Routes>
       </div>
     </>
   );

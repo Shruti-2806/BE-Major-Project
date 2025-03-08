@@ -12,6 +12,7 @@ const interviewRounds = [
     name: "Technical Interview",
     description: "In-depth discussion about your technical skills and problem-solving abilities.",
     status: "current",
+    path: "/resume"
   },
   {
     name: "System Design",

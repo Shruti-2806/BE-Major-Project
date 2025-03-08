@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { AiOutlineFilePdf } from "react-icons/ai";
-import axios from "axios"; // Import Axios
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function ResumeScreen() {
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState("");
   const [uploadStatus, setUploadStatus] = useState("");
+
+  // Initialize navigate
+  const navigate = useNavigate();
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
@@ -36,7 +40,12 @@ export default function ResumeScreen() {
 
       if (response.status === 200) {
         setUploadStatus("Upload successful! 🎉");
-        console.log(response.data)
+        console.log(response.data);
+
+
+        navigate("/technical-interview", {
+          state: response.data.data, 
+        });
       } else {
         setUploadStatus("Upload failed. Please try again.");
       }
@@ -54,7 +63,14 @@ export default function ResumeScreen() {
 
         <label className="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-gray-500 transition">
           <input type="file" className="hidden" accept=".pdf" onChange={handleFileChange} />
-          <svg className="w-12 h-12 text-gray-400 mb-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <svg
+            className="w-12 h-12 text-gray-400 mb-2"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 16v-4m0 0V8m0 4h4m-4 0H8m12 2a4 4 0 11-8 0 4 4 0 018 0zm4 6a8 8 0 10-16 0h16z"></path>
           </svg>
           <span className="text-gray-600">Click to upload or drag & drop</span>
@@ -69,12 +85,19 @@ export default function ResumeScreen() {
 
         {/* Upload Status Message */}
         {uploadStatus && (
-          <p className={`mt-4 ${uploadStatus.includes("successful") ? "text-green-600" : "text-red-600"}`}>
+          <p
+            className={`mt-4 ${
+              uploadStatus.includes("successful") ? "text-green-600" : "text-red-600"
+            }`}
+          >
             {uploadStatus}
           </p>
         )}
 
-        <button onClick={handleSubmit} className="mt-6 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+        <button
+          onClick={handleSubmit}
+          className="mt-6 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+        >
           Submit
         </button>
       </div>

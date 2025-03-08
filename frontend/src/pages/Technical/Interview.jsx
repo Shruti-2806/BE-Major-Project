@@ -1,21 +1,20 @@
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import Video from "./Video.jsx";
 import Audio from "./Audio.jsx";
 import { Mic, MicOff, LightbulbIcon } from "lucide-react";
 import { Button, Card } from "@mui/material";
 
-const questions = [
-  "Tell us about yourself and your experience.",
-  "Explain the differences between Spring Boot and Node.js and why you might choose one over the other for a specific project.",
-  "What are your strengths and weaknesses as a developer?",
-  "Describe a challenging project you worked on and how you overcame obstacles.",
-  "How do you stay updated with the latest technologies?",
-];
-
 export default function Interview() {
+  const location = useLocation();
+
+  const questionsFromState = location.state?.questions || [];
+
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [isRecording, setIsRecording] = useState(false);
-  const [answeredQuestions, setAnsweredQuestions] = useState(new Array(questions.length).fill(false));
+  const [answeredQuestions, setAnsweredQuestions] = useState(
+    new Array(questionsFromState.length).fill(false)
+  );
 
   const handlePreviousQuestion = () => {
     if (currentQuestionIndex > 0) {
@@ -24,7 +23,7 @@ export default function Interview() {
   };
 
   const handleNextQuestion = () => {
-    if (currentQuestionIndex < questions.length - 1) {
+    if (currentQuestionIndex < questionsFromState.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     }
   };
@@ -35,8 +34,8 @@ export default function Interview() {
 
       if (!newRecordingState) {
         // When stopping recording, mark the question as answered
-        setAnsweredQuestions((prev) => {
-          const updated = [...prev];
+        setAnsweredQuestions((prevAnswered) => {
+          const updated = [...prevAnswered];
           updated[currentQuestionIndex] = true;
           return updated;
         });
@@ -46,14 +45,34 @@ export default function Interview() {
     });
   };
 
+  // If no questions were passed (like if user navigates directly to /interview),
+  // we can render a fallback UI
+  if (questionsFromState.length === 0) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <main className="max-w-12xl mx-auto p-6">
+          <p>No questions to display. Please upload a resume first.</p>
+        </main>
+      </div>
+    );
+  }
+
+  // Current question object
+  const currentQuestion = questionsFromState[currentQuestionIndex];
+
   return (
     <div className="min-h-screen bg-gray-50">
       <main className="max-w-12xl mx-auto p-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-white rounded-lg border p-6">
             <div className="mt-8">
-              <h2 className="text-xl font-medium text-gray-800">{questions[currentQuestionIndex]}</h2>
-              <Audio text={questions[currentQuestionIndex]} autoPlay={true} />
+              {/* Display the current question description */}
+              <h2 className="text-xl font-medium text-gray-800">
+                {currentQuestion.description}
+              </h2>
+
+              {/* Pass the question text to your Audio component if needed */}
+              <Audio text={currentQuestion.description} autoPlay={true} />
 
               <Card className="bg-blue-50 p-4 border-blue-100 mt-24">
                 <div className="flex items-start space-x-3">
@@ -61,8 +80,9 @@ export default function Interview() {
                   <div className="text-sm text-blue-700">
                     <p className="font-medium mb-1">Note:</p>
                     <p>
-                      Click on "Record Answer" when you want to answer the question. After the interview, you will receive feedback
-                      along with the correct answers to compare.
+                      Click on "Record Answer" when you want to answer the question.
+                      After the interview, you will receive feedback along with
+                      the correct answers to compare.
                     </p>
                   </div>
                 </div>
@@ -97,27 +117,31 @@ export default function Interview() {
                 )}
               </Button>
 
-              {/* PREVIOUS QUESTION BUTTON */}
-              {/* <Button 
+              {/* PREVIOUS QUESTION BUTTON (uncomment if you need it) */}
+              {/* 
+              <Button 
                 variant="outlined"
                 className="border-gray-500 text-gray-600"
                 onClick={handlePreviousQuestion} 
                 disabled={currentQuestionIndex === 0}
               >
                 Previous Question
-              </Button> */}
+              </Button> 
+              */}
 
               {/* NEXT QUESTION BUTTON */}
               <Button 
                 variant="outlined"
                 className="border-gray-500 text-gray-600"
                 onClick={handleNextQuestion} 
-                disabled={!answeredQuestions[currentQuestionIndex] || currentQuestionIndex === questions.length - 1}
+                disabled={
+                  !answeredQuestions[currentQuestionIndex] ||
+                  currentQuestionIndex === questionsFromState.length - 1
+                }
               >
                 Next Question
               </Button>
             </div>
-
           </div>
         </div>
       </main>
